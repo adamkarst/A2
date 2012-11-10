@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import javax.swing.*;
 
-
+// sdfsdfsdf
 public class ObjectCreatorWindow extends JFrame{
 	private static JLabel openingFrameLabel;
 	private static JFrame windowPane;

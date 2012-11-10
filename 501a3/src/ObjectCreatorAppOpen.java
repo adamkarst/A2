@@ -74,6 +74,77 @@ public class ObjectCreatorAppOpen extends JFrame{
 		pane.add(panel2, BorderLayout.SOUTH);
 	}
     
+	
+    private static void setObjectCreatorPane(Container pane) {
+		// The label panel
+		final JPanel panel1 = new JPanel(new GridLayout(1,3));
+		// insert blank for formatting
+		panel1.add(new javax.swing.Box(0));
+		// make the label
+		openingFrameLabel = new JLabel("Object Creation");
+		// format the label
+		openingFrameLabel.setFont(new Font("Arial",1,24));
+		// add label to layout
+		panel1.add(openingFrameLabel);
+		// add blank
+		panel1.add(new javax.swing.Box(0));
+		
+		// put the panel into the display /w a separator
+		pane.add(panel1,BorderLayout.NORTH);
+		pane.add(new JSeparator(), BorderLayout.CENTER);
+		
+		// button panel
+		final JPanel panel2 = new JPanel();
+		JPanel displayFrame = new JPanel(new GridLayout(1,2,30,10));
+		panel2.setLayout(new GridLayout(4,1,25,25));
+		JLabel selectLabel = new JLabel("Please select an object to add from the list below");
+		panel2.add(selectLabel);
+		Vector<String> v = new Vector<String>();
+		v.add("Object - (contains primitives only)");
+		v.add("Object - (can contain obj references)");
+		v.add("Object - Primitive's Array");
+		v.add("Object - Object Array");
+		v.add("List - Object List");
+		JComboBox<String> comboBox = new JComboBox<String>(v);
+		panel2.add(comboBox);
+		JButton createObjButton = new JButton("Create");
+		createObjButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				createObjCreateButtonClickEvent(evt);
+			}
+		});
+		JButton backButton = new JButton("Back");
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				createBackButtonClickEvent(evt);
+			}
+		});
+		panel2.add(createObjButton);
+		panel2.add(backButton);
+		displayFrame.add(panel2);
+		JTextArea objectArea = new JTextArea();
+		
+		final JPanel panel3 = new JPanel();
+		panel3.add(objectArea);
+		displayFrame.add(objectArea);
+		pane.add(displayFrame);
+		
+	}
+	
+	private static void createBackButtonClickEvent(ActionEvent evt) {
+
+		windowPane.dispose();
+		windowPane = new ObjectCreatorAppOpen();
+       
+		windowPane.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ 
+        //Add the ubiquitous "Hello World" label.
+        setOpeningFrame(windowPane.getContentPane());
+ 
+        //Display the window.
+        windowPane.pack();
+        windowPane.setVisible(true);
+	}
 	private static void createButtonClick(ActionEvent evt) {
 		windowPane.dispose();
 		windowPane = new JFrame("CPSC 501 A3 - Adam Karst - Create Window");
@@ -101,57 +172,7 @@ public class ObjectCreatorAppOpen extends JFrame{
         windowPane.setVisible(true);
 	}
 	
-    private static void setObjectCreatorPane(Container pane) {
-		// The label panel
-		final JPanel panel1 = new JPanel(new GridLayout(1,3));
-		// insert blank for formatting
-		panel1.add(new javax.swing.Box(0));
-		// make the label
-		openingFrameLabel = new JLabel("Object Creation");
-		// format the label
-		openingFrameLabel.setFont(new Font("Arial",1,24));
-		// add label to layout
-		panel1.add(openingFrameLabel);
-		// add blank
-		panel1.add(new javax.swing.Box(0));
-		
-		// put the panel into the display /w a separator
-		pane.add(panel1,BorderLayout.NORTH);
-		pane.add(new JSeparator(), BorderLayout.CENTER);
-		
-		// button panel
-		final JPanel panel2 = new JPanel();
-		panel2.setLayout(new GridLayout(3,1,25,25));
-		JLabel selectLabel = new JLabel("Please select an object to add from the list below");
-		panel2.add(selectLabel);
-		Vector<String> v = new Vector<String>();
-		v.add("Objects");
-		v.add("More Objects");
-		JComboBox<String> comboBox = new JComboBox<String>(v);
-		panel2.add(comboBox);
-		JButton backButton = new JButton("Back");
-		backButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				createBackButtonClickEvent(evt);
-			}
-		});
-		panel2.add(backButton);
-		pane.add(panel2);
-		
-	}
+	private static void createObjCreateButtonClickEvent(ActionEvent evt) {}
 	
-	private static void createBackButtonClickEvent(ActionEvent evt) {
-		windowPane.dispose();
-		windowPane = new ObjectCreatorAppOpen();
-       
-		windowPane.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
-        //Add the ubiquitous "Hello World" label.
-        setOpeningFrame(windowPane.getContentPane());
- 
-        //Display the window.
-        windowPane.pack();
-        windowPane.setVisible(true);
-	}
 	
 }

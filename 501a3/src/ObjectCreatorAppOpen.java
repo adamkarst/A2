@@ -76,7 +76,7 @@ public class ObjectCreatorAppOpen extends JFrame{
     
 	private static void createButtonClick(ActionEvent evt) {
 		windowPane.dispose();
-		windowPane = new ObjectCreatorWindow("CPSC 501 A3 - Adam Karst - Create Window");
+		windowPane = new JFrame("CPSC 501 A3 - Adam Karst - Create Window");
         
 		windowPane.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  

@@ -3,10 +3,16 @@ import java.awt.event.*;
 import java.util.Vector;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-public class ObjectCreatorAppOpen extends JFrame{
+public class ObjectCreatorAppOpen{
 	private static JLabel openingFrameLabel;
 	private static JFrame windowPane;
+	private static JList<ObjectToAdd> objectArea;
+	private static DefaultListModel<ObjectToAdd> objectList;
+	private static JComboBox<String> comboBox;
+	
 	public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -95,17 +101,17 @@ public class ObjectCreatorAppOpen extends JFrame{
 		
 		// button panel
 		final JPanel panel2 = new JPanel();
-		JPanel displayFrame = new JPanel(new GridLayout(1,2,30,10));
+		JPanel displayFrame = new JPanel(new GridLayout(1,3,30,10));
 		panel2.setLayout(new GridLayout(4,1,25,25));
 		JLabel selectLabel = new JLabel("Please select an object to add from the list below");
 		panel2.add(selectLabel);
 		Vector<String> v = new Vector<String>();
-		v.add("Object - (contains primitives only)");
-		v.add("Object - (can contain obj references)");
+		v.add("Object - (primitives only)");
+		v.add("Object - (obj references)");
 		v.add("Object - Primitive's Array");
 		v.add("Object - Object Array");
 		v.add("List - Object List");
-		JComboBox<String> comboBox = new JComboBox<String>(v);
+		comboBox = new JComboBox<String>(v);
 		panel2.add(comboBox);
 		JButton createObjButton = new JButton("Create");
 		createObjButton.addActionListener(new ActionListener() {
@@ -122,11 +128,95 @@ public class ObjectCreatorAppOpen extends JFrame{
 		panel2.add(createObjButton);
 		panel2.add(backButton);
 		displayFrame.add(panel2);
-		JTextArea objectArea = new JTextArea();
+		objectList = new DefaultListModel<ObjectToAdd>();
+		objectArea = new JList<ObjectToAdd>(objectList);
+		objectArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		objectArea.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		    	ObjectToAdd theObj = (ObjectToAdd) objectList.get(objectArea.locationToIndex(evt.getPoint()));
+		    	JFrame editClickedObject;
+		        if (evt.getClickCount() == 2) {
+		        	if (theObj.getType() == 4) {
+		        		editClickedObject = new EditListObject(theObj, objectList, "Editing SubObject" + theObj.toString());
+		        	}
+		        	else if (theObj.getType() == 3) {
+		        		editClickedObject = new EditObjectArray(theObj, objectList, "Editing SubObject" + theObj.toString());
+		        	}
+		        	else if (theObj.getType() == 2) {
+		        		editClickedObject = new EditPrimativeArray(theObj, objectList, "Editing SubObject" + theObj.toString());
+		        	}
+		        	else if (theObj.getType() == 1) {
+		        		editClickedObject = new EditSubEObject(theObj, objectList, "Editing SubObject" + theObj.toString());
+		        	
+		        	}
+		        	else{
+		        		editClickedObject = new EditObjectWindow(theObj, "Editing SubObject" + theObj.toString());
+		        	}
+		        		 editClickedObject.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		        	
+		            //Display the window.
+		            editClickedObject.pack();
+		            editClickedObject.setVisible(true);
+		            
+		        } else if (evt.getClickCount() == 3) {   // Triple-click
+
+		        }
+		    }
+		});
+
+		JPanel editPanel = new JPanel(new GridLayout(6,2));
+		JButton editButton = new JButton("Edit Object");
 		
-		final JPanel panel3 = new JPanel();
-		panel3.add(objectArea);
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				editButtonClickEvent(e);
+			}
+		});
+		
+		JButton removeButton = new JButton("Remove Object");
+		
+		removeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				objectList.removeElementAt(objectArea.getSelectedIndex());
+			}
+		});
+		
+		editPanel.add(editButton);
+		editPanel.add(new javax.swing.Box(0));
+		editPanel.add(removeButton);
+		editPanel.add(new javax.swing.Box(0));
+		editPanel.add(new javax.swing.Box(0));
+		editPanel.add(new javax.swing.Box(0));
+		JButton sendButton = new JButton("Send");
+		sendButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SendButtonClickEvent(e);
+			}
+		});
+		
+		editPanel.add(sendButton);
+
+		editPanel.add(new javax.swing.Box(0));
+		JButton printButton = new JButton("Print");
+		printButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PrintButtonClickEvent(e);
+			}
+		});
+		editPanel.add(printButton);
+
+		editPanel.add(new javax.swing.Box(0));
+		JButton saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SaveButtonClickEvent(e);
+			}
+		});
+		
+		editPanel.add(saveButton);
 		displayFrame.add(objectArea);
+		displayFrame.add(editPanel);
 		pane.add(displayFrame);
 		
 	}
@@ -134,7 +224,7 @@ public class ObjectCreatorAppOpen extends JFrame{
 	private static void createBackButtonClickEvent(ActionEvent evt) {
 
 		windowPane.dispose();
-		windowPane = new ObjectCreatorAppOpen();
+		windowPane = new JFrame();
        
 		windowPane.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
@@ -145,6 +235,7 @@ public class ObjectCreatorAppOpen extends JFrame{
         windowPane.pack();
         windowPane.setVisible(true);
 	}
+	
 	private static void createButtonClick(ActionEvent evt) {
 		windowPane.dispose();
 		windowPane = new JFrame("CPSC 501 A3 - Adam Karst - Create Window");
@@ -172,7 +263,76 @@ public class ObjectCreatorAppOpen extends JFrame{
         windowPane.setVisible(true);
 	}
 	
-	private static void createObjCreateButtonClickEvent(ActionEvent evt) {}
+	private static void createObjCreateButtonClickEvent(ActionEvent evt) {
+		ObjectToAdd newObj = new ObjectToAdd(comboBox.getSelectedIndex());
+		objectList.addElement(newObj);
+	}
+	
+	private static void SendButtonClickEvent(ActionEvent evt) {
+		
+	}
+	private static void PrintButtonClickEvent(ActionEvent evt) {
+		
+	}
+	private static void SaveButtonClickEvent(ActionEvent evt) {
+		
+	}
+	
+	private static void editButtonClickEvent(ActionEvent evt) {
+		
+		ObjectToAdd objectTBEdited = objectList.getElementAt(objectArea.getSelectedIndex());
+		if (objectTBEdited.getType() == 0) {
+			JFrame fieldWindow = new EditObjectWindow(objectTBEdited,"Edit Fields for " + objectTBEdited);
+			
+			fieldWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+	        //Display the window.
+	        fieldWindow.pack();
+	        fieldWindow.setVisible(true);
+		}
+		else if(objectTBEdited.getType() == 1) {
+			JFrame fieldWindow = new EditSubEObject(objectTBEdited,objectList,"Edit Fields for 2" + objectTBEdited);
+			
+			fieldWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+	        //Display the window.
+	        fieldWindow.pack();
+	        fieldWindow.setVisible(true);
+		
+		}
+		else if(objectTBEdited.getType() == 2) {
+			JFrame fieldWindow = new EditPrimativeArray(objectTBEdited,objectList,"Edit Fields for " + objectTBEdited);
+			
+			fieldWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+	        //Display the window.
+	        fieldWindow.pack();
+	        fieldWindow.setVisible(true);
+		
+		}
+		else if(objectTBEdited.getType() == 3) {
+			JFrame fieldWindow = new EditObjectArray(objectTBEdited,objectList,"Edit Fields for 3 " + objectTBEdited);
+			
+			fieldWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+	        //Display the window.
+	        fieldWindow.pack();
+	        fieldWindow.setVisible(true);
+		
+		}
+		else if(objectTBEdited.getType() == 4) {
+			JFrame fieldWindow = new EditListObject(objectTBEdited,objectList,"Edit Fields for 3 " + objectTBEdited);
+			
+			fieldWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+	        //Display the window.
+	        fieldWindow.pack();
+	        fieldWindow.setVisible(true);
+		
+		}
+		
+	}
+
 	
 	
 }

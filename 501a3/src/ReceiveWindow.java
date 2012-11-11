@@ -160,7 +160,7 @@ public class ReceiveWindow extends JFrame {
 			receiveLabel.setText(theLocation + " " + theServerIP + " " + thePort);
 			theClient = new Client(thePort, theServerIP);
 			try {
-				theClient.receiveFile(theLocation + "Adam.xml");
+				theClient.receiveFile(theLocation + "\\Adam2.xml");
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

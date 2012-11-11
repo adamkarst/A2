@@ -11,6 +11,8 @@ public class Client {
 	
 	int portToConnect = 12324;
 	String serverAddress = "127.0.0.1";
+	private int IS_FINISHED = 0;
+	
 	
 	public Client(int port, String serverAddr)
 	{
@@ -37,5 +39,10 @@ public class Client {
     bos.close();
     sock.close();
     System.out.println("File received, connection closed");
+    IS_FINISHED = 1;
+  }
+  
+  public int getFinished() {
+	  return IS_FINISHED;
   }
 }

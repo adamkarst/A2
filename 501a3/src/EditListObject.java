@@ -1,12 +1,11 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
+import java.util.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.xml.ws.Dispatch;
 
 
+@SuppressWarnings("serial")
 public class EditListObject extends JFrame {
 	private static ObjectToAdd myObject;
 	private static final String[] primativeList = {"char","byte","short","int","long", "float","double","boolean","void"};

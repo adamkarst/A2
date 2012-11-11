@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class EditObjectWindow extends JFrame {
 	
 	private static ObjectToAdd myObject;

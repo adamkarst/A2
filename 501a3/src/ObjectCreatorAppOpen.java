@@ -3,8 +3,6 @@ import java.awt.event.*;
 import java.util.Vector;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 public class ObjectCreatorAppOpen{
 	private static JLabel openingFrameLabel;
@@ -251,15 +249,16 @@ public class ObjectCreatorAppOpen{
 	
 	private static void receiveButtonClick(ActionEvent evt) {
 		windowPane.dispose();
-		windowPane = new ObjectReceiveWindow("CPSC 501 A3 - Adam Karst - Receive Window");
+		windowPane = new ReceiveWindow("CPSC 501 A3 - Adam Karst - Receive Window");
         
 		windowPane.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
         //Add the ubiquitous "Hello World" label.
-        setOpeningFrame(windowPane.getContentPane());
  
         //Display the window.
         windowPane.pack();
+
+        windowPane.setSize(1000,200);
         windowPane.setVisible(true);
 	}
 	

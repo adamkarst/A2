@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import Networking.Client;
 
+@SuppressWarnings("serial")
 public class ReceiveWindow extends JFrame {
 	private static Client theClient;
 	private static String theLocation = "C:\\Users\\Alpha1\\";
@@ -26,15 +27,18 @@ public class ReceiveWindow extends JFrame {
 	final static JLabel serverIPConfirm = new JLabel();
 	final static JLabel portLabel = new JLabel();
 
-	private final static JButton receiveButton = new JButton("Receive");
+	private static JScrollPane textScrollPane = new JScrollPane();
+	private static JTextArea  fieldArea = new JTextArea();
+	private static JPanel bodyPanel = new JPanel(new GridLayout(1,2));
+	
 	
 	public ReceiveWindow(String Name) {
 		super(Name);
 		Container windowPane = getContentPane();
-		
 		JPanel returnPanel = setupReceivePanel();
-		JPanel bodyPanel = new JPanel(new GridLayout(1,2));
-		JPanel receivePanel = new JPanel(new GridLayout(2,2));
+		JPanel receivePanel = new JPanel(new FlowLayout());
+
+		JButton receiveButton = new JButton("Receive");
 		receiveButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -52,16 +56,22 @@ public class ReceiveWindow extends JFrame {
 				
 			}
 		});
-		
+		receiveButton.setSize(100, 50);
+		receivePanel.setSize(400,100);
 		receivePanel.add(receiveButton);
+		
 		receivePanel.add(receiveLabel);
 		
-		bodyPanel.add(returnPanel,BorderLayout.NORTH);
-		bodyPanel.add(receivePanel, BorderLayout.SOUTH);
 		
-	    windowPane.setLayout(new GridLayout(2,1));
+		
+		bodyPanel.add(returnPanel);
+		bodyPanel.add(receivePanel);
+		JPanel holdingPanel = new JPanel(new BorderLayout());
+		holdingPanel.setSize(400,300);
+		holdingPanel.add(bodyPanel);
 	    
-		windowPane.add(bodyPanel);
+	    
+		windowPane.add(holdingPanel);
 		
 
 		windowPane.setVisible(true);
@@ -168,6 +178,12 @@ public class ReceiveWindow extends JFrame {
 			}
 		
 		}
+		fieldArea = new JTextArea("",5,50);
+		XMLReaderRecursive reader = new XMLReaderRecursive("sendFileXML.xml", fieldArea);
+		fieldArea.setLineWrap(false);
+		textScrollPane = new JScrollPane(fieldArea);
+		bodyPanel.add(textScrollPane);
+		textScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	}
 
 	private static void setHostIPClick(ActionEvent e) {

@@ -1,7 +1,6 @@
-import javax.swing.DefaultListModel;
+import javax.swing.*;
 
 import Networking.Server;
-
 
 public class serverSendFileThread extends Thread {
 	
@@ -9,12 +8,13 @@ public class serverSendFileThread extends Thread {
 	    	super("serverSendFileThread");
 	    }
 	    
-	    public void run(DefaultListModel list) {
+	    public void run(DefaultListModel list, JFrame theFrame) {
 	    	testWriter writer = new testWriter(list);
 	    	Server server  = new Server(1236);
 			try
 			{
 				server.sendFile("E:\\School\\CPSC 501\\501a3\\sendFileXML.xml");
+				theFrame.dispose();
 			}
 			catch(Exception exp)
 			{

@@ -261,6 +261,7 @@ public class ObjectCreatorAppOpen{
         windowPane.pack();
 
         windowPane.setSize(1000,200);
+        windowPane.setResizable(false);
         windowPane.setVisible(true);
 	}
 	
@@ -272,14 +273,14 @@ public class ObjectCreatorAppOpen{
 	private static void SendButtonClickEvent(ActionEvent evt) {
 		serverSendFileThread sendObjects = new serverSendFileThread();
 		
-		sendObjects.run(objectList);
-		createAndShowGUI();
+		sendObjects.run(objectList,windowPane);
+	
 	}
 	private static void PrintButtonClickEvent(ActionEvent evt) {
 		
 	}
 	private static void SaveButtonClickEvent(ActionEvent evt) {
-		
+		XMLWriter writer = new XMLWriter(objectList);
 	}
 	
 	private static void editButtonClickEvent(ActionEvent evt) {

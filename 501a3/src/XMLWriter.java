@@ -47,29 +47,35 @@ public class XMLWriter {
 		theObjectToSerialize.setName("Object"); // names can be changed after the instantiation of an element
 		if (obj.getType() == 0) {
 			Object theObjectsObject = obj.getObject();
+			if (theObjectsObject != null) {
+				theObjectToSerialize.setAttribute("class", theObjectsObject.getClass().toString());
+				valueOfObject.setText(theObjectsObject.toString());
+				valueOfObject.setName("Value");
+				theObjectToSerialize.addContent(valueOfObject);
+			}
 			
 			
-			theObjectToSerialize.setAttribute("class", theObjectsObject.getClass().toString());
-			valueOfObject.setText(theObjectsObject.toString());
-			valueOfObject.setName("Value");
-			theObjectToSerialize.addContent(valueOfObject);
 		}
 		else if (obj.getType() == 1) {
 			for (int i = 0; i < obj.field.size();i++) {
 				ObjectToAdd object = obj.field.get(i);
-				serializeObject(object,theObjectToSerialize);
+				if (object != null) {
+					serializeObject(object,theObjectToSerialize);
+				}
 			}
 		}
 		else if (obj.getType() == 2 || obj.getType() == 3) {
-			for (int i = 0; i < obj.objectArray.length;i++) {
-				ObjectToAdd object = obj.getArrayObject(i);
-				serializeObject(object,theObjectToSerialize);
-			}
+			try {
+
+
+			} catch (Exception e) {}
 		}
 		else if (obj.getType() == 4) {
 			for (int i = 0; i < obj.objectList.size();i++) {
 				ObjectToAdd object = obj.getFromListAt(i);
-				serializeObject(object,theObjectToSerialize);
+				if (object != null) {
+					serializeObject(object,theObjectToSerialize);
+				}
 			}
 		}
 		

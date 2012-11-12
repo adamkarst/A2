@@ -1,6 +1,8 @@
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.*;
+
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -8,14 +10,15 @@ import org.jdom2.input.SAXBuilder;
 
 
 public class XMLReaderRecursive {
-
+	private static JTextArea myArea;
+	private static String text = "";
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public XMLReaderRecursive(String file, JTextArea theAreaToFill) {
 		// TODO Auto-generated method stub
-		String fileName = "App.xml";
-		
+		String fileName = file;
+		myArea = theAreaToFill;
 		try
 		{
 			SAXBuilder builder = new SAXBuilder(false);
@@ -25,6 +28,7 @@ public class XMLReaderRecursive {
 			Element root = doc.getRootElement(); // getting the root element of a document
 			
 			recursive(root, 0); // recursive function to visit every element
+			myArea.setText(text);
 		}
 		catch(Exception e)
 		{
@@ -59,12 +63,13 @@ public class XMLReaderRecursive {
 				println( "\tText in " + curEl.getName() + ": " + curEl.getText(), level+1);
 			
 		}
+		
 	}
 
 	private static void println(String msg, int level) {
 		// adding proper number of tabs before printing the actual string
 		for ( int i = 0; i < level; i++ )
-			System.out.print("\t");
-		System.out.println(msg);
+			text +=("\t");
+		text += (msg+"\n");
 	}
 }

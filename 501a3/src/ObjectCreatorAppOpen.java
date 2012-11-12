@@ -4,6 +4,8 @@ import java.util.Vector;
 
 import javax.swing.*;
 
+import Networking.Server;
+
 public class ObjectCreatorAppOpen{
 	private static JLabel openingFrameLabel;
 	private static JFrame windowPane;
@@ -268,7 +270,10 @@ public class ObjectCreatorAppOpen{
 	}
 	
 	private static void SendButtonClickEvent(ActionEvent evt) {
+		serverSendFileThread sendObjects = new serverSendFileThread();
 		
+		sendObjects.run(objectList);
+		createAndShowGUI();
 	}
 	private static void PrintButtonClickEvent(ActionEvent evt) {
 		

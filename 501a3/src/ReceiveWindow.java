@@ -12,9 +12,9 @@ import Networking.Client;
 
 public class ReceiveWindow extends JFrame {
 	private static Client theClient;
-	private static String theLocation = "";
-	private static String theServerIP = "";
-	private static int thePort = -1;
+	private static String theLocation = "C:\\Users\\Alpha1\\";
+	private static String theServerIP = "10.0.1.54";
+	private static int thePort = 1236;
 	private final static JLabel receiveLabel = new JLabel();
 	final static JTextField theDestinationTextField = new JTextField();
 	final static JTextField theHostIPTextField = new JTextField();
@@ -160,7 +160,8 @@ public class ReceiveWindow extends JFrame {
 			receiveLabel.setText(theLocation + " " + theServerIP + " " + thePort);
 			theClient = new Client(thePort, theServerIP);
 			try {
-				theClient.receiveFile(theLocation + "\\Adam2.xml");
+				theClient.receiveFile(theLocation + "\\sendFileXML.xml");
+				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -170,20 +171,7 @@ public class ReceiveWindow extends JFrame {
 	}
 
 	private static void setHostIPClick(ActionEvent e) {
-		try {
-			if (InetAddress.getByName(theHostIPTextField.getText()).isReachable(1000)) {
-				serverIPConfirm.setText("IP set to: " + theHostIPTextField.getText());
 				theServerIP = theHostIPTextField.getText();
-			}
-			else {
-				serverIPConfirm.setText("IP not available");
-			}
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			
 	}
 }

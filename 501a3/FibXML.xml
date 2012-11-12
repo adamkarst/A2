@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MyRoot><FibFib Index="0">0</FibFib><Fibonacci Index="1">1</Fibonacci><FibFib Index="2">1</FibFib><Fibonacci Index="3">2</Fibonacci><FibFib Index="4">3</FibFib><Fibonacci Index="5">5</Fibonacci><FibFib Index="6">8</FibFib><Fibonacci Index="7">13</Fibonacci><FibFib Index="8">21</FibFib><Fibonacci Index="9">34</Fibonacci></MyRoot>
+<serialized><Value id="0">0</Value><Value id="1">1</Value><Value id="2">1</Value><Value id="3">2</Value><Value id="4">3</Value><Value id="5">5</Value><Value id="6">8</Value><Value id="7">13</Value><Value id="8">21</Value><Value id="9">34</Value></serialized>

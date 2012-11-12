@@ -79,17 +79,12 @@ public class EditPrimativeArray extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (myObject.getObjectArrayLength() > 0 && (counter < MAX_OBJ)) {
-					try {
-						ObjectToAdd newObjectToAdd = new ObjectToAdd(0);
-						fieldList.addElement(newObjectToAdd);
-						myObject.addField(newObjectToAdd);
-						String valueString = "Double Click here to Edit";
-						fieldValueList.addElement(valueString);
-						counter++;
-						}catch (WrongTypeException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+					ObjectToAdd newObjectToAdd = new ObjectToAdd(0);
+					fieldList.addElement(newObjectToAdd);
+					myObject.addPrimitiveToArray(newObjectToAdd);
+					String valueString = "Double Click here to Edit";
+					fieldValueList.addElement(valueString);
+					counter++;
 				}
 			}
 		});

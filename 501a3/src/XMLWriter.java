@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+import javax.swing.DefaultListModel;
+
 import org.jdom2.*;
 import org.jdom2.input.*;
 import org.jdom2.output.*;
@@ -10,28 +12,18 @@ public class XMLWriter {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public XMLWriter(DefaultListModel<ObjectToAdd> objectList) {
 		// TODO Auto-generated method stub
-		String fileName = "FibXML.xml";
+		String fileName = "sendFileXML.xml";
 		
-		Element root = new Element("MyRoot");
+		Element root = new Element("serialized");
 		
-		int low = 0;
-		int high = 1;
 		
-		for ( int i = 0; i < 10; i++)
+		for ( int i = 0; i < objectList.size(); i++)
 		{
-			Element fib = new Element("Fibonacci");
-			fib.setAttribute("Index", String.valueOf(i));
-			if ( i % 2 == 0 )
-				fib.setName("FibFib"); // names can be changed after the instantiation of an element
-			fib.setText(String.valueOf(low));
-			int temp = high;
-			high += low;
-			low = temp;
+			ObjectToAdd theObject = (ObjectToAdd)objectList.elementAt(i);
 			
-			root.addContent(fib);
-			
+			serializeObject(theObject, root);
 		}
 			
 		Document doc = new Document(root);
@@ -45,6 +37,45 @@ public class XMLWriter {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private Element serializeObject(ObjectToAdd obj, Element root) {
+		Element theObjectToSerialize = new Element("Object");
+		Element valueOfObject = new Element("Value");
+		
+		
+		theObjectToSerialize.setName("Object"); // names can be changed after the instantiation of an element
+		if (obj.getType() == 0) {
+			Object theObjectsObject = obj.getObject();
+			
+			
+			theObjectToSerialize.setAttribute("class", theObjectsObject.getClass().toString());
+			valueOfObject.setText(theObjectsObject.toString());
+			valueOfObject.setName("Value");
+			theObjectToSerialize.addContent(valueOfObject);
+		}
+		else if (obj.getType() == 1) {
+			for (int i = 0; i < obj.field.size();i++) {
+				ObjectToAdd object = obj.field.get(i);
+				serializeObject(object,theObjectToSerialize);
+			}
+		}
+		else if (obj.getType() == 2 || obj.getType() == 3) {
+			for (int i = 0; i < obj.objectArray.length;i++) {
+				ObjectToAdd object = obj.getArrayObject(i);
+				serializeObject(object,theObjectToSerialize);
+			}
+		}
+		else if (obj.getType() == 4) {
+			for (int i = 0; i < obj.objectList.size();i++) {
+				ObjectToAdd object = obj.getFromListAt(i);
+				serializeObject(object,theObjectToSerialize);
+			}
+		}
+		
+		
+		root.addContent(theObjectToSerialize);
+		return root;
 	}
 
 }

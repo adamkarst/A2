@@ -1,51 +1,67 @@
 import java.lang.reflect.*;
 import java.util.*;
 
+import javax.swing.DefaultListModel;
+
 @SuppressWarnings("unused")
 
 public class ObjectToAdd {
 	private int TYPE;
 	private Object theObject;
-	public Vector<Object> field;
+	public DefaultListModel<ObjectToAdd> field;
 	public Vector<Object> value;
-	private ObjectToAdd[] objectArray;
+	public ObjectToAdd[] objectArray;
 	private int ARRAY_INDEX;
-	private List<Object> objectList;
+	List<ObjectToAdd> objectList;
 	
 	public ObjectToAdd(int newType) {
 		this.TYPE = newType;
-		this.field = new Vector<Object>();
+		if (this.TYPE > 0) {
+			theObject = this;
+		}
+		this.field = new DefaultListModel<ObjectToAdd>();
 		this.value = new Vector<Object>();
-		objectList = new ArrayList<Object>();
-		this.theObject = new Object();
+		objectList = new ArrayList<ObjectToAdd>();
+		
 		this.ARRAY_INDEX = 0;
 	}
 	
-	
+	public Object getObject() {
+		return this.theObject;
+	}
+	public void setObject(Object obj) {
+		this.theObject = obj;
+	}
 	public int getType() {
 		return this.TYPE;
 	}
 
-	private void setFieldValue(Object Value,int index) {
+	private void setFieldValue(ObjectToAdd Value,int index) {
 		this.field.setElementAt(Value, index);
 	}
 	
-	private void addPrimitiveToArray(ObjectToAdd object) {
-		if (this.TYPE == 3) {
-			objectArray[ARRAY_INDEX++] = object;
-		}
-	}
-	
-	private void addObjectToArray(ObjectToAdd object) {
-		if (this.TYPE == 4) {
-			objectArray[ARRAY_INDEX++] = object;
-		}
-	}
-	
-	public void addField(Object Value) throws WrongTypeException{
-
-			this.field.add(Value);
+	void addPrimitiveToArray(ObjectToAdd object) {
 		
+			objectArray[ARRAY_INDEX++] = object;
+		
+	}
+	
+	 void addObjectToArray(ObjectToAdd object) {
+		
+			objectArray[ARRAY_INDEX++] = object;
+		
+	}
+	public ObjectToAdd getArrayObject(int index) {
+		return objectArray[index];
+	}
+	public void addField(ObjectToAdd Value) throws WrongTypeException{
+
+			field.addElement(Value);
+		
+	}
+	
+	public ObjectToAdd getField(int index) {
+		return this.field.elementAt(index);
 	}
 	
 	public void addFieldValue(Object Value) throws WrongTypeException{
@@ -100,11 +116,11 @@ public class ObjectToAdd {
 	public void makeVoid(){
 		theObject = null;
 	}
-	public void addToList(Object object) {
+	public void addToList(ObjectToAdd object) {
 		objectList.add(object);
 	}
 	
-	public Object getFromListAt(int i) {
+	public ObjectToAdd getFromListAt(int i) {
 		return objectList.get(i);
 	}
 }

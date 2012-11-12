@@ -9,7 +9,7 @@ public class ServerTest {
 		Server server  = new Server(1236);
 		try
 		{
-			server.sendFile("E:\\School\\CPSC 501\\XMLPlay\\XMLPlay\\App.xml");
+			server.sendFile("E:\\School\\CPSC 501\\501a3\\sendFileXML.xml");
 		}
 		catch(Exception exp)
 		{

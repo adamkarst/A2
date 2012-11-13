@@ -8,12 +8,13 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class EditListObject extends JFrame {
 	private static ObjectToAdd myObject;
-	private static final String[] primativeList = {"char","byte","short","int","long", "float","double","boolean","void"};
 	private static DefaultListModel preExistingObj;
 	private static DefaultListModel fieldList;
 	private static DefaultListModel fieldValueList;
 	private static JList<String> fieldType = new JList<String>();
 	private static JList<String> valueList = new JList<String>();
+	
+	@SuppressWarnings("unused")
 	private static Container thePane;
 	private static JPanel theBottom;
 	private static JTextField textFieldValue;
@@ -52,7 +53,6 @@ public class EditListObject extends JFrame {
 	{
 		final JPanel displayPanel = new JPanel(new GridLayout(2,2));
 
-		final JLabel label = new JLabel();
 		final JTextField theField = new JTextField();
 		JButton theButton = new JButton("Set Array Length");
 		theButton.addActionListener(new ActionListener() {

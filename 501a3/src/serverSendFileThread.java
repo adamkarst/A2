@@ -8,8 +8,7 @@ public class serverSendFileThread extends Thread {
 	    	super("serverSendFileThread");
 	    }
 	    
-	    public void run(DefaultListModel list, JFrame theFrame) {
-	    	testWriter writer = new testWriter(list);
+	    public void run(DefaultListModel<ObjectToAdd> list, JFrame theFrame) {
 	    	Server server  = new Server(1236);
 			try
 			{

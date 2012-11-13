@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.*;
-
 import javax.swing.*;
 
 import Networking.Client;
@@ -179,6 +177,7 @@ public class ReceiveWindow extends JFrame {
 		
 		}
 		fieldArea = new JTextArea("",5,50);
+		@SuppressWarnings("unused")
 		XMLReaderRecursive reader = new XMLReaderRecursive("sendFileXML.xml", fieldArea);
 		fieldArea.setLineWrap(false);
 		textScrollPane = new JScrollPane(fieldArea);
